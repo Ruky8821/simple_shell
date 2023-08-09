@@ -1,0 +1,31 @@
+#include "main.h"
+/**
+ * str_len - returns the lenght of string
+ * @c: pointer
+ * Return: return length
+ */
+
+int str_len(char *c)
+{
+	int i;
+
+	for (i = 0; *c != '\0'; c++)
+		++i;
+	return (i);
+}
+
+/**
+ * str_cmp - it compares if two strings
+ * @x: first string
+ * @y: second string
+ * Return: <0: (x  < y), > 0:(x == y) and >0:(x > y)
+ */
+int str_cmp(const char *x, const char *y)
+{
+	while (*x == *y)
+	{
+		if (*x == '\0')
+		return (0);
+	}
+	return (*x - *y);
+}

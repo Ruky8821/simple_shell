@@ -10,7 +10,8 @@
 #include <stdlib.h>
 int command_type(const char *token);
 void display_list();
-
+int str_len(char *c);
+int str_cmp(const char *x, const char *y);
 /**
 * struct _command - associate specifier with pointer function
 * @cmd: command symbol

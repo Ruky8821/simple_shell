@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
 		}
 	if (count == 1 || count > 2)
 		printf("%s: No such file or directory\n", argv[0]);
-	if (count == 2 && strcmp(first_token, "bin") == 0)
+	if (count == 2 && str_cmp(first_token, "bin") == 0)
 		command_type(second_token);
 	free(line);
 	}

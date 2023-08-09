@@ -15,7 +15,7 @@ int command_type(const char *token)
 	nb_specs = sizeof(command_func) / sizeof(command_func[0]);
 	for (j = 0; j < nb_specs; j++)
 	{
-		if (strcmp(token, command_func[j].cmd))
+		if (str_cmp(token, command_func[j].cmd))
 			command_func[j].command_spec();
 	}
 	return (1);
