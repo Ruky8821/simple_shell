@@ -8,10 +8,9 @@
 */
 int main(int argc, char *argv[])
 {
-	char *line, *token, *first_token, *second_token;
+	char *line;
 	ssize_t  gerror;
 	size_t size = 0;
-	int count;
 
 	(void)argc;
 	while (1)
