@@ -5,7 +5,7 @@
 * @token: command symbole
 * Return: int
 */
-int command_type(const char *token)
+void command_type(const char *token)
 {
 	int nb_specs, j;
 
@@ -15,8 +15,9 @@ int command_type(const char *token)
 	nb_specs = sizeof(command_func) / sizeof(command_func[0]);
 	for (j = 0; j < nb_specs; j++)
 	{
-		if (str_cmp(token, command_func[j].cmd))
+		if (str_cmp(token, command_func[j].cmd) == 10)
+		{
 			command_func[j].command_spec();
+		}
 	}
-	return (1);
 }

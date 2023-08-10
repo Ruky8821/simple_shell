@@ -8,10 +8,13 @@
 #include <sys/wait.h>
 #include <stdio.h>
 #include <stdlib.h>
-int command_type(const char *token);
-void display_list();
+#include <string.h>
+void command_type(const char *token);
+void display_list(void);
 int str_len(char *c);
+void  input_controller(char *input, char *argv);
 int str_cmp(const char *x, const char *y);
+void handle_command(char *path, char *argv);
 /**
 * struct _command - associate specifier with pointer function
 * @cmd: command symbol

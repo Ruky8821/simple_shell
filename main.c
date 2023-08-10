@@ -24,22 +24,8 @@ int main(int argc, char *argv[])
 			free(line);
 			exit(0);
 		}
-		token = strtok(line, "/");
-		count = 0;
-		while (token != NULL)
-		{
-			if (count == 0)
-				first_token = token;
-			else if (count == 1)
-				second_token = token;
-			count++;
-			token = strtok(NULL, "/");
-		}
-	if (count == 1 || count > 2)
-		printf("%s: No such file or directory\n", argv[0]);
-	if (count == 2 && str_cmp(first_token, "bin") == 0)
-		command_type(second_token);
-	free(line);
+		input_controller(line, argv[0]);
+		free(line);
 	}
 	return (0);
 }

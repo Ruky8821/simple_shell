@@ -26,6 +26,11 @@ int str_cmp(const char *x, const char *y)
 	{
 		if (*x == '\0')
 		return (0);
+		 x++;
+		 y++;
 	}
-	return (*x - *y);
+	if (*x > *y)
+		return (*x - *y);
+	else
+		return (*y - *x);
 }
