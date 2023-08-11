@@ -34,3 +34,19 @@ int str_cmp(const char *x, const char *y)
 	else
 		return (*y - *x);
 }
+/**
+ * str_cpy - function that copies a string from source to destination
+ * @x: destination string
+ * @y: source string
+ * Return: <0: (x  < y), > 0:(x == y) and >0:(x > y)
+ */
+void str_cpy(char *x, const char *y)
+{
+	while (*y != '\0')
+	{
+		*x = *y;
+		x++;
+		y++;
+	}
+	*x = '\0';
+}

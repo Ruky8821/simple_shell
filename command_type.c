@@ -3,21 +3,13 @@
 /**
 * command_type - process the command type
 * @token: command symbole
+* @path : pointer to full path of the command executable
 * Return: int
 */
-void command_type(const char *token)
+void command_type(const char *token, const char *path)
 {
-	int nb_specs, j;
+	char *const argv[] = {"ls", NULL};
 
-	command command_func[] = {
-		{"ls", display_list}
-	};
-	nb_specs = sizeof(command_func) / sizeof(command_func[0]);
-	for (j = 0; j < nb_specs; j++)
-	{
-		if (str_cmp(token, command_func[j].cmd) == 10)
-		{
-			command_func[j].command_spec();
-		}
-	}
+	if (execve(path, argv, NULL) == -1)
+		perror("execve error");
 }
