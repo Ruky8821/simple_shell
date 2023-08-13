@@ -13,7 +13,7 @@ void input_controller(char *input, char *argv)
 
 	for (i = 0; input[i]; i++)
 		++i;
-	if (i == 2 && input[0] == '\n')
+	if (i > 1 && input[0] == '\n')
 		return;
 	    tokens = malloc(sizeof(char *) * (i + 1));
 	if (tokens == NULL)
