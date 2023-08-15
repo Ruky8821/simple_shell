@@ -9,13 +9,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-void command_type(const char *token, const char *path);
+void command_type(char *token, const char *path,char **params);
 void display_list(void);
 int str_len(char *c);
 void str_cpy(char *dest, const char *src);
 void  input_controller(char *input, char *argv);
 int str_cmp(const char *x, const char *y);
-void handle_command(char *path, char *argv);
+void handle_command(char *path, char *argv, char **params);
 /**
 * struct _command - associate specifier with pointer function
 * @cmd: command symbol

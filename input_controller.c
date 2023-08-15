@@ -8,13 +8,15 @@
 void input_controller(char *input, char *argv)
 {
 	char **tokens;
-	char *token;
+	char *token, *cmd;
 	int i, j;
 
 	for (i = 0; input[i]; i++)
 		++i;
 	if (i == 2 && input[0] == '\n')
 		return;
+	if (str_cmp(input,"exit") == 10)
+		exit(0);
 	    tokens = malloc(sizeof(char *) * (i + 1));
 	if (tokens == NULL)
 		return;
@@ -42,10 +44,18 @@ void input_controller(char *input, char *argv)
 		i++;
 	}
 	tokens[i] = NULL;
-	handle_command(tokens[0], argv);
+	cmd = malloc(sizeof(char) * (str_len(tokens[0]) + 1));
+	for (j = 0; tokens[0][j] != '\0' ; j++)
+		cmd[j] = tokens[0][j];
+	for (j = 0; j < i - 1; j++)
+		tokens[j] = tokens[j + 1];
+	tokens[j] = '\0';
+	handle_command(cmd, argv, tokens);
 	for (j = 0; j < i; j++)
 		free(tokens[j]);
-	free(tokens);
+	 free(tokens);
+	 
+
 }
 /**
  * handle_command - function that processes the command based on the given path
@@ -53,7 +63,7 @@ void input_controller(char *input, char *argv)
  * @argv: The name of the executable.
 */
 
-void handle_command(char *path, char *argv)
+void handle_command(char *path, char *argv,char **params)
 {
 	char *get_command, *command;
 	char *temp_path = (char *)malloc(strlen(path) + 1);
@@ -67,12 +77,10 @@ void handle_command(char *path, char *argv)
 			command = get_command;
 			get_command = strtok(NULL, "/");
 		}
-		command_type(command, temp_path);
+		command_type(command, temp_path, params);
 }
 	else
 		printf("%s: No such file or directory\n", argv);
 
 }
-
-
 
