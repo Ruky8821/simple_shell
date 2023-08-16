@@ -23,6 +23,7 @@ void execute(char **argv)
 /**
  *
  */
+/*
 void newproc(char **argv)
 {
 	pid_t pid_child;
@@ -49,3 +50,4 @@ void newproc(char **argv)
 		}
 	}
 }
+*/
