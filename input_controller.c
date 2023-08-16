@@ -13,7 +13,7 @@ void input_controller(char *input, char *argv)
 
 	for (i = 0; input[i]; i++)
 		++i;
-	if (i == 2 && input[0] == '\n')
+	if (i > 1 && input[0] == '\n')
 		return;
 	if (str_cmp(input,"exit") == 10)
 		exit(0);
