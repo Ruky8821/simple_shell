@@ -9,7 +9,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-void command_type(char *token, const char *path,char **params);
+void command_type(char *token, const char *path, char **params);
 void display_list(void);
 int str_len(char *c);
 void str_cpy(char *dest, const char *src);

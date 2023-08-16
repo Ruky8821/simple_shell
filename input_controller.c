@@ -7,15 +7,14 @@
 */
 void input_controller(char *input, char *argv)
 {
-	char **tokens;
-	char *token, *cmd;
+	char **tokens, *token, *cmd;
 	int i, j;
 
 	for (i = 0; input[i]; i++)
 		++i;
 	if (i > 1 && input[0] == '\n')
 		return;
-	if (str_cmp(input,"exit") == 10)
+	if (str_cmp(input, "exit") == 10)
 		exit(0);
 	    tokens = malloc(sizeof(char *) * (i + 1));
 	if (tokens == NULL)
@@ -54,16 +53,17 @@ void input_controller(char *input, char *argv)
 	for (j = 0; j < i; j++)
 		free(tokens[j]);
 	 free(tokens);
-	 
-
 }
+
+
+
 /**
  * handle_command - function that processes the command based on the given path
  * @path: The path containing the command to be processed.
  * @argv: The name of the executable.
 */
 
-void handle_command(char *path, char *argv,char **params)
+void handle_command(char *path, char *argv, char **params)
 {
 	char *get_command, *command;
 	char *temp_path = (char *)malloc(strlen(path) + 1);
