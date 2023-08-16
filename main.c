@@ -25,6 +25,7 @@ int main(int argc, char *argv[])
 		}
 		input_controller(line, argv[0]);
 		free(line);
+
 	}
 	return (0);
 }

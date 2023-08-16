@@ -62,6 +62,9 @@ char **separate_params(char *input, int length)
 	tokens[i] = NULL;
 	return (tokens);
 }
+
+
+
 /**
  * handle_command - function that processes the command based on the given path
  * @path: The path containing the command to be processed.
