@@ -52,7 +52,7 @@ void input_controller(char *input, char *argv)
 	handle_command(cmd, argv, tokens);
 	for (j = 0; j < i; j++)
 		free(tokens[j]);
-	 free(tokens);
+	free(tokens);
 }
 
 
@@ -78,9 +78,8 @@ void handle_command(char *path, char *argv, char **params)
 			get_command = strtok(NULL, "/");
 		}
 		command_type(command, temp_path, params);
-}
+	}
 	else
 		printf("%s: No such file or directory\n", argv);
-
 }
 
