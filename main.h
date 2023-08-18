@@ -15,9 +15,12 @@ int str_len(char *c);
 void str_cpy(char *dest, const char *src);
 void  input_controller(char *input, char *argv);
 int str_cmp(const char *x, const char *y);
+char **separate_params(char *input, int length);
 void handle_command(char *path, char *argv, char **params);
 void newproc(char **argv);
 void execute(char **argv);
+void change_dir(char **params);
+
 /**
 * struct _command - associate specifier with pointer function
 * @cmd: command symbol
