@@ -9,6 +9,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+extern char **environ;
 void command_type(char *token, const char *path, char **params);
 void display_list(void);
 int str_len(char *c);
@@ -20,7 +22,7 @@ void handle_command(char *path, char *argv, char **params);
 void newproc(char **argv);
 void execute(char **argv);
 void change_dir(char **params);
-
+void get_absolute_path(char *rel_path, char *cwd);
 /**
 * struct _command - associate specifier with pointer function
 * @cmd: command symbol

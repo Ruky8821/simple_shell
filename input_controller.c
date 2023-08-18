@@ -54,7 +54,9 @@ char **separate_params(char *input, int length)
 			return (NULL);
 		}
 		for (j = 0; one_param[j] != '\0' && one_param[j] != '\n' ; j++)
+		{
 			tokens[i][j] = one_param[j];
+		}
 		tokens[i][j] = '\0';
 		one_param = strtok(NULL, " ");
 		i++;
