@@ -35,7 +35,7 @@ void input_controller(char *input, char *argv)
 */
 char **separate_params(char *input, int length)
 {
-	char **tokens, *one_param;
+	char **tokens, *one_param, *cmd;
 	int i, j;
 
 	tokens = malloc(sizeof(char *) * (length + 1));
@@ -71,7 +71,7 @@ char **separate_params(char *input, int length)
 	for (j = 0; j < i; j++)
 		free(tokens[j]);
 	free(tokens);
-
+	return(tokens);
 }
 
 
