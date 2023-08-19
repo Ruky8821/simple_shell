@@ -12,7 +12,6 @@
 
 extern char **environ;
 void command_type(char *token, const char *path, char **params);
-void display_list(void);
 int str_len(char *c);
 void str_cpy(char *dest, const char *src);
 void  input_controller(char *input, char *argv);
@@ -23,14 +22,7 @@ void newproc(char **argv);
 void execute(char **argv);
 void change_dir(char **params);
 void get_absolute_path(char *rel_path, char *cwd);
-/**
-* struct _command - associate specifier with pointer function
-* @cmd: command symbol
-* @command_spec: pointer to function that achieves the command functionality
-*/
-typedef struct _command
-{
-	char *cmd;
-	void (*command_spec)();
-} command;
+char *get_path(char *argv);
+char *token_dirs(char *penv_cp, char *argv, char *penv);
+
 #endif

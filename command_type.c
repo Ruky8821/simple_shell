@@ -27,7 +27,7 @@ void command_type(char *token, const char *path, char **params)
 		argv[0] = token;
 		for (i = 0; params[i] != NULL ; i++)
 		{
-			if (str_cmp(params[i], " ") != 0)
+			if (str_cmp(params[i], " ") == 0)
 				continue;
 			argv[i + 1] = malloc(str_len(params[i]) + 1);
 			for (j = 0; params[i][j]; j++)
