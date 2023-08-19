@@ -50,3 +50,27 @@ void str_cpy(char *x, const char *y)
 	}
 	*x = '\0';
 }
+
+
+/**
+ * _strcat - concatenates two strings
+ * @dest: firts string
+ * @src: second string
+ * Return: first string
+ */
+char *_strcat(char *dest, char *src)
+{
+        int x = 0;
+        int y = 0;
+
+        while (dest[x])
+        {
+                x++;
+        }
+        for (y = 0; src[y]; y++)
+        {
+                dest[x++] = src[y];
+        }
+        dest[x] = '\0';
+        return (dest);
+}
