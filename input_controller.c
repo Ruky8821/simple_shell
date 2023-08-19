@@ -54,7 +54,9 @@ char **separate_params(char *input, int length)
 			return (NULL);
 		}
 		for (j = 0; one_param[j] != '\0' && one_param[j] != '\n' ; j++)
+		{
 			tokens[i][j] = one_param[j];
+		}
 		tokens[i][j] = '\0';
 		one_param = strtok(NULL, " ");
 		i++;
@@ -85,13 +87,19 @@ char **separate_params(char *input, int length)
 
 void handle_command(char *path, char *argv, char **params)
 {
-	char *get_command, *command;
+	char *get_command, *command, *full_path;
 	char *temp_path = (char *)malloc(strlen(path) + 1);
 
 	str_cpy(temp_path, path);
 	if (str_cmp(path, "cd") == 0)
 	{
 		change_dir(params);
+		return;
+	}
+	if (path[0] != '/')
+	{
+		full_path =  get_path(path);
+		command_type(path, full_path, params);
 		return;
 	}
 	if (access(path, F_OK) == 0)
