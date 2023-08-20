@@ -23,9 +23,13 @@ char *get_path(char *argv)
 		{
 			penv = malloc(sizeof(char) * (str_len(env[i]) - 4));
 			penv_cp = malloc(sizeof(char) * (str_len(env[i]) - 4));
-			if (penv_cp == NULL || penv == NULL)
+			if (penv_cp == NULL)
 			{
 				free(penv);
+				return (NULL);
+			}
+			if (penv == NULL)
+			{
 				free(penv_cp);
 				return (NULL);
 			}

@@ -7,9 +7,9 @@
 
 int str_len(char *c)
 {
-	int i;
+	int i = 0;
 
-	for (i = 0; *c != '\0'; c++)
+	for ( ; *c != '\0'; c++)
 		++i;
 	return (i);
 }
@@ -60,17 +60,13 @@ void str_cpy(char *x, const char *y)
  */
 char *_strcat(char *dest, char *src)
 {
-        int x = 0;
-        int y = 0;
+	int x = 0;
+	int y = 0;
 
-        while (dest[x])
-        {
-                x++;
-        }
-        for (y = 0; src[y]; y++)
-        {
-                dest[x++] = src[y];
-        }
-        dest[x] = '\0';
-        return (dest);
+	while (dest[x])
+		x++;
+	for (y = 0; src[y]; y++)
+		dest[x++] = src[y];
+	dest[x] = '\0';
+	return (dest);
 }

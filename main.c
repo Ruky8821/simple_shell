@@ -8,8 +8,8 @@
 */
 int main(int argc, char *argv[])
 {
-	char *line;
-	ssize_t  gerror;
+	char *line = NULL;
+	ssize_t  gerror = 0;
 	size_t size = 0;
 
 	(void)argc;
