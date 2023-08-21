@@ -19,10 +19,10 @@ void command_type(char *token, const char *path, char **params)
 		return;
 	}
 	for (i = 0; params[i] ; i++)
-		length++;
+		;
 	if (pid == 0)
 	{
-		argv = malloc(sizeof(char *) * (length + 2));
+		argv = malloc(sizeof(char *) * (i + 2));
 		copy_non_space_strings(argv, params, token);
 		execve(path, argv, env);
 		perror("execve error");

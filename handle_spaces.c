@@ -7,12 +7,14 @@
  */
 void copy_non_space_strings(char **argv, char **params, char *token)
 {
-	int argv_index = 1, i, j, k = 0;
-	int contains_only_spaces = 1;
+	int argv_index = 1, i, k, j;
+	int contains_only_spaces;
 
 	argv[0] = token;
 	for (i = 0; params[i] != NULL; i++)
 	{
+		contains_only_spaces = 1;
+		k = 0;
 		for (j = 0; params[i][j]; j++)
 		{
 			if (params[i][j] != ' ' && params[i][j] != '\t')
