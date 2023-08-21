@@ -7,9 +7,9 @@
 
 int str_len(char *c)
 {
-	int i = 0;
+	int i;
 
-	for ( ; *c != '\0'; c++)
+	for (i = 0 ; *c != '\0'; c++)
 		++i;
 	return (i);
 }

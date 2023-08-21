@@ -36,8 +36,6 @@ char *get_path(char *argv)
 			str_cpy(penv, env[i] + 5);
 			str_cpy(penv_cp, penv);
 			exe_path = token_dirs(penv_cp, argv, penv);
-			/**free(penv); */
-			/**free(penv_cp);*/
 			return (exe_path);
 		}
 	}

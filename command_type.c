@@ -9,9 +9,9 @@
 */
 void command_type(char *token, const char *path, char **params)
 {
-	int i, j, length = 0;
+	int i, length = 0;
 	pid_t pid = fork();
-	char **env = environ;
+	char **env = environ, **argv;
 
 	if (pid == -1)
 	{
@@ -22,19 +22,8 @@ void command_type(char *token, const char *path, char **params)
 		length++;
 	if (pid == 0)
 	{
-		char **argv = malloc(sizeof(char *) * (length + 2));
-
-		argv[0] = token;
-		for (i = 0; params[i] != NULL ; i++)
-		{
-			if (str_cmp(params[i], " ") == 0)
-				continue;
-			argv[i + 1] = malloc(str_len(params[i]) + 1);
-			for (j = 0; params[i][j]; j++)
-				argv[i + 1][j] = params[i][j];
-			argv[i + 1][j] = '\0';
-		}
-		argv[i + 1] = NULL;
+		argv = malloc(sizeof(char *) * (length + 2));
+		copy_non_space_strings(argv, params, token);
 		execve(path, argv, env);
 		perror("execve error");
 		exit(1);

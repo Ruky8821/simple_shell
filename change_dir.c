@@ -6,34 +6,41 @@
 void change_dir(char **params)
 {
 	int i, length = 0;
-	char buffer[1024];
+	char buffer[1024], **temp_params;
 
 	for (i = 0; params[i] != NULL; i++)
-		length++;
-	if (length == 0)
+		;
+	temp_params = malloc(sizeof(char *) * (length + 1));
+	copy_non_space_strings(temp_params, params, "cd");
+	for (i = 0; temp_params[i] != NULL; i++)
+		;
+	if (i == 1)
 	{
 		if (chdir("/home") == -1)
-			perror("chdir");
+			perror("");
 	}
-	else if (length > 1)
-		printf("too many params");
-	else if (length == 1 && params[0][0] == '/')
+	else if (i > 2)
+		write(1, "too many arguments\n", 19);
+	else if (i == 2)
 	{
-		if (str_cmp(params[0], "-") == 0)
+		if (str_cmp(temp_params[1], "-") == 0)
 		{
 			if (chdir("/") == -1)
-				perror("chdir");
+				perror(temp_params[1]);
 			return;
 		}
-		if (chdir(params[0]) == -1)
-			perror("chdir");
-	}
-	else
-	{
-		if (getcwd(buffer, sizeof(buffer)) != NULL)
-			get_absolute_path(params[0], buffer);
+		if (temp_params[1][0] == '/')
+		{
+			if (chdir(temp_params[1]) == -1)
+				perror(temp_params[1]);
+		}
 		else
-			perror("getcwd error");
+		{
+			if (getcwd(buffer, sizeof(buffer)) != NULL)
+				get_absolute_path(temp_params[1], buffer);
+			else
+				perror("");
+		}
 	}
 }
 
@@ -55,6 +62,6 @@ void get_absolute_path(char *rel_path, char *cwd)
 		new_dir[i + j + 1] = rel_path[j];
 	new_dir[i + j + 1] = '\0';
 	if (chdir(new_dir) == -1)
-		perror("chdir");
+		perror(rel_path);
 	free(new_dir);
 }
