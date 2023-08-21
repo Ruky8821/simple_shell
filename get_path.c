@@ -36,8 +36,8 @@ char *get_path(char *argv)
 			str_cpy(penv, env[i] + 5);
 			str_cpy(penv_cp, penv);
 			exe_path = token_dirs(penv_cp, argv, penv);
-			free(penv);
-			free(penv_cp);
+			/**free(penv); */
+			/**free(penv_cp);*/
 			return (exe_path);
 		}
 	}
@@ -69,10 +69,15 @@ char *token_dirs(char *penv_cp, char *argv, char *penv)
 		strcat(exe_path, "/");
 		strcat(exe_path, argv);
 		if (access(exe_path, F_OK | X_OK) == 0)
+		{
+			free(penv);
+			free(penv_cp);
 			return (exe_path);
+		}
 		free(exe_path);
 		path_dir = strtok(NULL, ":;");
 	}
+/**	free(exe_path);*/
 	free(penv);
 	free(penv_cp);
 	return (NULL);

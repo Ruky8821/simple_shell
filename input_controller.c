@@ -85,6 +85,7 @@ void handle_command(char *path, char *argv, char **params)
 	{
 		full_path =  get_path(path);
 		command_type(path, full_path, params);
+		free(full_path);
 		return;
 	}
 	temp_path = (char *)malloc(strlen(path) + 1);
@@ -98,6 +99,7 @@ void handle_command(char *path, char *argv, char **params)
 			get_command = strtok(NULL, "/");
 		}
 		command_type(command, temp_path, params);
+	
 	}
 	else
 		printf("%s: No such file or directory\n", argv);
