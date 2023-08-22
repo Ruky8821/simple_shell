@@ -3,30 +3,26 @@
 /**
 * input_controller - function that takes user input and handles commands
 * @input: user input string to be processed
+* @argv: The name of the executable.
 */
-void input_controller(char *input)
+void input_controller(char *input, char *argv)
 {
 	char **params, *cmd;
 	int i, j;
 
-	for (i = 0; input[i] ; i++)
-		;
+	for (i = 0; input[i] != '\0'; i++)
+		++i;
 	if (i > 1 && input[0] == '\n')
 		return;
 	if (str_cmp(input, "exit") == 10)
 		exit(0);
 	params = separate_params(input, i);
 	cmd = malloc(sizeof(char) * (str_len(params[0]) + 1));
-	if (cmd == NULL)
-	{
-		free(params);
-		return;
-	}
 	str_cpy(cmd, params[0]);
-	for (j = 0 ; j < i - 1 ; j++)
+	for (j = 0; j < i - 2; j++)
 		params[j] = params[j + 1];
-	params[j - 1] = NULL;
-	handle_command(cmd, params);
+	params[j - 2] = NULL;
+	handle_command(cmd, argv, params);
 	for (j = 0; j < i; j++)
 		free(params[j]);
 	free(params);
@@ -48,7 +44,7 @@ char **separate_params(char *input, int length)
 		return (NULL);
 	for (i = 0; i <= length; i++)
 		tokens[i] = NULL;
-	one_param = strtok(input, " \t");
+	one_param = strtok(input, " ");
 	i = 0;
 	while (one_param != NULL)
 	{
@@ -72,9 +68,10 @@ char **separate_params(char *input, int length)
 /**
  * handle_command - function that processes the command based on the given path
  * @path: The path containing the command to be processed.
+ * @argv: The name of the executable.
  * @params: the params excluding the command
 */
-void handle_command(char *path, char **params)
+void handle_command(char *path, char *argv, char **params)
 {
 	char *get_command, *command, *full_path;
 	char *temp_path = NULL;
@@ -102,6 +99,9 @@ void handle_command(char *path, char **params)
 			get_command = strtok(NULL, "/");
 		}
 		command_type(command, temp_path, params);
+	
 	}
+	else
+		printf("%s: No such file or directory\n", argv);
 	free(temp_path);
 }
