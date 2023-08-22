@@ -22,5 +22,6 @@ void change_dir(char **params);
 void get_absolute_path(char *rel_path, char *cwd);
 char *get_path(char *argv);
 char *token_dirs(char *penv_cp, char *argv, char *penv);
+char *_strcat(char *dest, char *src);
 void copy_non_space_strings(char **argv, char **params, char *token);
 #endif

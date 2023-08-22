@@ -11,11 +11,11 @@ void input_controller(char *input)
 
 	for (i = 0; input[i] ; i++)
 		;
-	if (i > 1 && input[0] == '\n')
+	if (i == 1 && input[0] == '\n')
 		return;
 	if (str_cmp(input, "exit") == 10)
 		exit(0);
-	params = separate_params(input, i);
+	params = separate_params(input, i - 1);
 	cmd = malloc(sizeof(char) * (str_len(params[0]) + 1));
 	if (cmd == NULL)
 	{
@@ -87,6 +87,12 @@ void handle_command(char *path, char **params)
 	if (path[0] != '/')
 	{
 		full_path =  get_path(path);
+		if (full_path == NULL)
+		{
+			free(full_path);
+			perror("command not found");
+			return;
+		}
 		command_type(path, full_path, params);
 		free(full_path);
 		return;

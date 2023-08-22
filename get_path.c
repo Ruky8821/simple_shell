@@ -56,7 +56,7 @@ char *token_dirs(char *penv_cp, char *argv, char *penv)
 	path_dir = strtok(penv_cp, ":;");
 	while (path_dir != NULL)
 	{
-		exe_path = malloc(strlen(path_dir) + strlen(argv) + 2);
+		exe_path = malloc(str_len(path_dir) + str_len(argv) + 2);
 		if (exe_path == NULL)
 		{
 			free(penv);
@@ -64,8 +64,8 @@ char *token_dirs(char *penv_cp, char *argv, char *penv)
 			return (NULL);
 		}
 		str_cpy(exe_path, path_dir);
-		strcat(exe_path, "/");
-		strcat(exe_path, argv);
+		_strcat(exe_path, "/");
+		_strcat(exe_path, argv);
 		if (access(exe_path, F_OK | X_OK) == 0)
 		{
 			free(penv);
@@ -75,7 +75,6 @@ char *token_dirs(char *penv_cp, char *argv, char *penv)
 		free(exe_path);
 		path_dir = strtok(NULL, ":;");
 	}
-/**	free(exe_path);*/
 	free(penv);
 	free(penv_cp);
 	return (NULL);

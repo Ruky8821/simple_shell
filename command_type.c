@@ -1,5 +1,6 @@
 #include "main.h"
 #include <string.h>
+#include <errno.h>
 /**
 * command_type - process the command type
 * @token: command symbole
@@ -9,7 +10,7 @@
 */
 void command_type(char *token, const char *path, char **params)
 {
-	int i, length = 0;
+	int i;
 	pid_t pid = fork();
 	char **env = environ, **argv;
 
