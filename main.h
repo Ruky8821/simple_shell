@@ -15,6 +15,7 @@ void command_type(char *token, const char *path, char **params);
 int str_len(char *c);
 void str_cpy(char *dest, const char *src);
 void  input_controller(char *input);
+int check_line_empty(char *input);
 int str_cmp(const char *x, const char *y);
 char **separate_params(char *input, int length);
 void handle_command(char *path, char **params);

@@ -9,7 +9,7 @@ void change_dir(char **params)
 	char buffer[1024], **temp_params;
 
 	for (i = 0; params[i] != NULL; i++)
-		;
+		length++;
 	temp_params = malloc(sizeof(char *) * (length + 1));
 	copy_non_space_strings(temp_params, params, "cd");
 	for (i = 0; temp_params[i] != NULL; i++)
@@ -25,7 +25,7 @@ void change_dir(char **params)
 	{
 		if (str_cmp(temp_params[1], "-") == 0)
 		{
-			if (chdir("/") == -1)
+			if (chdir("/root") == -1)
 				perror(temp_params[1]);
 			return;
 		}

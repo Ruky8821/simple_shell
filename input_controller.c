@@ -9,12 +9,10 @@ void input_controller(char *input)
 	char **params, *cmd;
 	int i, j;
 
+	if (check_line_empty(input) == 1)
+		return;
 	for (i = 0; input[i] ; i++)
 		;
-	if (i == 1 && input[0] == '\n')
-		return;
-	if (str_cmp(input, "exit") == 10)
-		exit(0);
 	params = separate_params(input, i - 1);
 	cmd = malloc(sizeof(char) * (str_len(params[0]) + 1));
 	if (cmd == NULL)
@@ -79,6 +77,8 @@ void handle_command(char *path, char **params)
 	char *get_command, *command, *full_path;
 	char *temp_path = NULL;
 
+	if (str_cmp(path, "exit") == 0)
+		exit(0);
 	if (str_cmp(path, "cd") == 0)
 	{
 		change_dir(params);

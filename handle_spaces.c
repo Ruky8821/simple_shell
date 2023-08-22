@@ -14,7 +14,6 @@ void copy_non_space_strings(char **argv, char **params, char *token)
 	for (i = 0; params[i] != NULL; i++)
 	{
 		contains_only_spaces = 1;
-		k = 0;
 		for (j = 0; params[i][j]; j++)
 		{
 			if (params[i][j] != ' ' && params[i][j] != '\t')
@@ -25,17 +24,40 @@ void copy_non_space_strings(char **argv, char **params, char *token)
 		}
 		if (!contains_only_spaces)
 		{
+			k = 0;
 			argv[argv_index] = malloc(str_len(params[i]) + 1);
 			for (j = 0; params[i][j]; j++)
 			{
-				if (params[i][j] == ' ')
-					continue;
-				argv[argv_index][k] = params[i][j];
-				k++;
+				if (params[i][j] != ' ' && params[i][j] != '\t')
+				{
+					argv[argv_index][k] = params[i][j];
+					k++;
+				}
 			}
 			argv[argv_index][k] = '\0';
 			argv_index++;
 		}
 	}
 	argv[argv_index] = NULL;
+}
+/**
+ * check_line_empty - Checks if a string consists of only whitespace characters
+ * @input: The input string to be checked
+ *
+ * Return: 1 if the string contains only whitespace characters, 0 otherwise
+ */
+int check_line_empty(char *input)
+{
+	int empty_spaces = 1;
+	int i;
+
+	for (i = 0; input[i] ; i++)
+	{
+		if (input[i] != ' ' && input[i] != '\t' && input[i] != '\n')
+		{
+			empty_spaces = 0;
+			break;
+		}
+	}
+	return (empty_spaces);
 }
