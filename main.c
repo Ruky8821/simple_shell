@@ -12,6 +12,7 @@ int main(int argc, char *argv[])
 	size_t size = 0;
 
 	(void)argc;
+	write(STDOUT_FILENO, "$ ", 2);
 	while (1)
 	{
 		line = NULL;

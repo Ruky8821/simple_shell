@@ -6,46 +6,53 @@
 */
 void input_controller(char *input, char *argv)
 {
-	char **params, *cmd;
+	char **params, **tags;
 	int i, j;
 
-	if (check_line_empty(input) == 1)
-		return;
 	for (i = 0; input[i] ; i++)
 		;
-	params = separate_params(input, i - 1);
-	cmd = malloc(sizeof(char) * (str_len(params[0]) + 1));
-	if (cmd == NULL)
-	{
-		free(params);
-		return;
-	}
-	str_cpy(cmd, params[0]);
-	for (j = 0 ; j < i - 1 ; j++)
-		params[j] = params[j + 1];
-	params[j - 1] = NULL;
-	handle_command(cmd, params, argv);
+	params = separate_params(input);
+	for (i = 0; params[i] != NULL; i++)
+		;
+	tags = malloc(sizeof(char *) * i);
+	for (j = 0; j < i - 1 ; j++)
+		tags[j] = params[j + 1];
+	tags[j] = NULL;
+	handle_command(params[0], tags, argv);
 	for (j = 0; j < i; j++)
 		free(params[j]);
 	free(params);
-	free(cmd);
+	for (j = 0; j < i - 1; j++)
+		free(tags[j]);
+	free(tags);
 }
 /**
  * separate_params - function that retrieves all the params from the input
  * @input: user input
- * @length: the length of the user string input
  * Return: char double array of params
 */
-char **separate_params(char *input, int length)
+char **separate_params(char *input)
 {
-	char **tokens, *one_param;
-	int i, j;
+	char **tokens, *one_param, *token;
+	int i = 0, j;
+	char *temp_input = malloc(sizeof(char) * (str_len(input)));
 
-	tokens = malloc(sizeof(char *) * (length + 1));
-	if (tokens == NULL)
+	if (temp_input == NULL)
 		return (NULL);
-	for (i = 0; i <= length; i++)
-		tokens[i] = NULL;
+	strtok(input, "\n");
+	str_cpy(temp_input, input);
+	token = strtok(temp_input, " \t");
+	while (token != NULL)
+	{
+		i++;
+		token = strtok(NULL, " \t");
+	}
+	tokens = (char **) malloc(sizeof(char *) * (i + 1));
+	if (tokens == NULL)
+	{
+		free(temp_input);
+		return (NULL);
+	}
 	one_param = strtok(input, " \t");
 	i = 0;
 	while (one_param != NULL)
@@ -56,15 +63,15 @@ char **separate_params(char *input, int length)
 			for (j = 0; j < i ; j++)
 				free(tokens[j]);
 			free(tokens);
+			free(temp_input);
 			return (NULL);
 		}
-		for (j = 0; one_param[j] != '\0' && one_param[j] != '\n' ; j++)
-			tokens[i][j] = one_param[j];
-		tokens[i][j] = '\0';
-		one_param = strtok(NULL, " ");
+		str_cpy(tokens[i], one_param);
+		one_param = strtok(NULL, " \t");
 		i++;
 	}
 	tokens[i] = NULL;
+	free(temp_input);
 	return (tokens);
 }
 /**
@@ -97,7 +104,7 @@ void handle_command(char *path, char **params, char *argv)
 		free(full_path);
 		return;
 	}
-	temp_path = (char *)malloc(strlen(path) + 1);
+	temp_path = (char *)malloc(str_len(path) + 1);
 	str_cpy(temp_path, path);
 	if (access(path, F_OK) == 0)
 	{
