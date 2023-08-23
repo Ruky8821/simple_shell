@@ -17,8 +17,18 @@ void input_controller(char *input, char *argv)
 	for (i = 0; params[i] != NULL; i++)
 		;
 	tags = malloc(sizeof(char *) * i);
+	if (tags == NULL)
+	{
+		for (int i = 0; params[i] != NULL; i++)
+			free(params[i]);
+		free(params);
+		return;
+	}
 	for (j = 0; j < i - 1 ; j++)
-		tags[j] = params[j + 1];
+	{
+		tags[j] = malloc(strlen(params[j + 1]) + 1);
+		str_cpy(tags[j], params[j + 1]);
+	}
 	tags[j] = NULL;
 	handle_command(params[0], tags, argv);
 	for (j = 0; j < i; j++)
