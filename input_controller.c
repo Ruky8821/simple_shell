@@ -9,6 +9,8 @@ void input_controller(char *input, char *argv)
 	char **params, **tags;
 	int i, j;
 
+	if (check_line_empty(input) == 1)
+		return;
 	for (i = 0; input[i] ; i++)
 		;
 	params = separate_params(input);
@@ -41,11 +43,11 @@ char **separate_params(char *input)
 		return (NULL);
 	strtok(input, "\n");
 	str_cpy(temp_input, input);
-	token = strtok(temp_input, " \t");
+	token = strtok(temp_input, " ");
 	while (token != NULL)
 	{
 		i++;
-		token = strtok(NULL, " \t");
+		token = strtok(NULL, " ");
 	}
 	tokens = (char **) malloc(sizeof(char *) * (i + 1));
 	if (tokens == NULL)
