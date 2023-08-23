@@ -25,8 +25,6 @@ void command_type(char *token, const char *path, char **params)
 	{
 		argv = malloc(sizeof(char *) * (i + 2));
 		copy_non_space_strings(argv, params, token);
-		for (i = 0; argv[i] != NULL ; i++)
-			printf("%s\n", argv[i]);
 		execve(path, argv, env);
 		perror("execve error");
 		exit(1);
