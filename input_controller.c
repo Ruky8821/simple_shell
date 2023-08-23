@@ -109,8 +109,11 @@ void handle_command(char *path, char **params, char *argv)
 		full_path =  get_path(path);
 		if (full_path == NULL)
 		{
+			print_error("1: ", argv);
+			write(STDERR_FILENO, path, str_len(path));
+			write(STDERR_FILENO, ": not found\n", 12);
 			free(full_path);
-			return;
+			exit(127);
 		}
 			command_type(path, full_path, params);
 		free(full_path);
