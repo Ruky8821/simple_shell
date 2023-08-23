@@ -1,10 +1,10 @@
 #include "main.h"
-#include <errno.h>
 /**
 * input_controller - function that takes user input and handles commands
 * @input: user input string to be processed
+* @argv : An array of pointers to the command-line arguments
 */
-void input_controller(char *input)
+void input_controller(char *input, char *argv)
 {
 	char **params, *cmd;
 	int i, j;
@@ -24,7 +24,7 @@ void input_controller(char *input)
 	for (j = 0 ; j < i - 1 ; j++)
 		params[j] = params[j + 1];
 	params[j - 1] = NULL;
-	handle_command(cmd, params);
+	handle_command(cmd, params, argv);
 	for (j = 0; j < i; j++)
 		free(params[j]);
 	free(params);
@@ -71,14 +71,15 @@ char **separate_params(char *input, int length)
  * handle_command - function that processes the command based on the given path
  * @path: The path containing the command to be processed.
  * @params: the params excluding the command
+ * * @argv : An array of pointers to the command-line arguments
 */
-void handle_command(char *path, char **params)
+void handle_command(char *path, char **params, char *argv)
 {
 	char *get_command, *command, *full_path;
 	char *temp_path = NULL;
 
 	if (str_cmp(path, "exit") == 0)
-		exit(0);
+		exit_shell(params, argv);
 	if (str_cmp(path, "cd") == 0)
 	{
 		change_dir(params);
@@ -90,7 +91,6 @@ void handle_command(char *path, char **params)
 		if (full_path == NULL)
 		{
 			free(full_path);
-			perror("command not found");
 			return;
 		}
 			command_type(path, full_path, params);

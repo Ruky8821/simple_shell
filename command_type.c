@@ -27,7 +27,6 @@ void command_type(char *token, const char *path, char **params)
 		args = malloc(sizeof(char *) * (i + 2));
 		copy_non_space_strings(args, params, token);
 		execve(path, args, env);
-		perror("execve error");
 		exit(1);
 	}
 	else
