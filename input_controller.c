@@ -19,7 +19,7 @@ void input_controller(char *input, char *argv)
 	tags = malloc(sizeof(char *) * i);
 	if (tags == NULL)
 	{
-		for (int i = 0; params[i] != NULL; i++)
+		for (i = 0; params[i] != NULL; i++)
 			free(params[i]);
 		free(params);
 		return;
