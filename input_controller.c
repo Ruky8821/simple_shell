@@ -93,7 +93,7 @@ void handle_command(char *path, char **params)
 			perror("command not found");
 			return;
 		}
-		command_type(path, full_path, params);
+			command_type(path, full_path, params);
 		free(full_path);
 		return;
 	}

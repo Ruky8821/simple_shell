@@ -12,7 +12,8 @@ void command_type(char *token, const char *path, char **params)
 {
 	int i;
 	pid_t pid = fork();
-	char **env = environ, **argv;
+	char **env = environ, **args;
+
 
 	if (pid == -1)
 	{
@@ -23,9 +24,9 @@ void command_type(char *token, const char *path, char **params)
 		;
 	if (pid == 0)
 	{
-		argv = malloc(sizeof(char *) * (i + 2));
-		copy_non_space_strings(argv, params, token);
-		execve(path, argv, env);
+		args = malloc(sizeof(char *) * (i + 2));
+		copy_non_space_strings(args, params, token);
+		execve(path, args, env);
 		perror("execve error");
 		exit(1);
 	}

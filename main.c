@@ -12,7 +12,6 @@ int main(void)
 	while (1)
 	{
 		line = NULL;
-		write(1, "$ ", 2);
 		gerror = getline(&line, &size, stdin);
 		if (gerror == -1)
 		{
