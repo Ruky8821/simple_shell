@@ -79,7 +79,7 @@ char **separate_params(char *input)
 			return (NULL);
 		}
 		str_cpy(tokens[i], one_param);
-		one_param = strtok(NULL, " \t");
+		one_param = _strtok(NULL, " \t");
 		i++;
 	}
 	tokens[i] = NULL;
