@@ -29,4 +29,5 @@ char *token_dirs(char *penv_cp, char *argv, char *penv);
 char *_strcat(char *dest, char *src);
 void copy_non_space_strings(char **argv, char **params, char *token);
 int string_to_int(const char *str);
+char *_strtok(char *str, const char *delim);
 #endif
