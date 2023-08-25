@@ -6,14 +6,10 @@
  */
 void change_dir(char **params, char *argv)
 {
-	int i, length = 0;
-	char buffer[1024], **temp_params;
+	int i;
+	char buffer[1024];
 
 	for (i = 0; params[i] != NULL; i++)
-		length++;
-	temp_params = malloc(sizeof(char *) * (length + 1));
-	copy_non_space_strings(temp_params, params, "cd");
-	for (i = 0; temp_params[i] != NULL; i++)
 		;
 	if (i == 1)
 	{
@@ -22,26 +18,26 @@ void change_dir(char **params, char *argv)
 	}
 	else if (i == 2)
 	{
-		if (str_cmp(temp_params[1], "-") == 0)
+		if (str_cmp(params[1], "-") == 0)
 		{
 			if (chdir("/root") == -1)
-				perror(temp_params[1]);
+				perror(params[1]);
 			return;
 		}
-		if (temp_params[1][0] == '/')
+		if (params[1][0] == '/')
 		{
-			if (access(temp_params[1], F_OK) != 0)
+			if (access(params[1], F_OK) != 0)
 			{
-				not_existing_dir(argv, temp_params[1]);
+				not_existing_dir(argv, params[1]);
 				return;
 			}
-			if (chdir(temp_params[1]) == -1)
-				perror(temp_params[1]);
+			if (chdir(params[1]) == -1)
+				perror(params[1]);
 		}
 		else
 		{
 			if (getcwd(buffer, sizeof(buffer)) != NULL)
-				get_absolute_path(temp_params[1], buffer);
+				get_absolute_path(params[1], buffer);
 			else
 				perror("");
 		}
