@@ -2,8 +2,9 @@
 /**
  * change_dir-function that changes the currenct working directory
  * @params : double pointer to the path to the new directory
+ * @argv : An array of pointers to the command-line arguments
  */
-void change_dir(char **params)
+void change_dir(char **params, char *argv)
 {
 	int i, length = 0;
 	char buffer[1024], **temp_params;
@@ -16,11 +17,9 @@ void change_dir(char **params)
 		;
 	if (i == 1)
 	{
-		if (chdir("/home") == -1)
+		if (chdir("/root") == -1)
 			perror("");
 	}
-	else if (i > 2)
-		write(1, "too many arguments\n", 19);
 	else if (i == 2)
 	{
 		if (str_cmp(temp_params[1], "-") == 0)
@@ -31,6 +30,11 @@ void change_dir(char **params)
 		}
 		if (temp_params[1][0] == '/')
 		{
+			if (access(temp_params[1], F_OK) != 0)
+			{
+				not_existing_dir(argv, temp_params[1]);
+				return;
+			}
 			if (chdir(temp_params[1]) == -1)
 				perror(temp_params[1]);
 		}
@@ -65,3 +69,4 @@ void get_absolute_path(char *rel_path, char *cwd)
 		perror(rel_path);
 	free(new_dir);
 }
+

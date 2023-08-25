@@ -101,7 +101,7 @@ void handle_command(char *path, char **params, char *argv)
 		exit_shell(params, argv);
 	if (str_cmp(path, "cd") == 0)
 	{
-		change_dir(params);
+		change_dir(params, argv);
 		return;
 	}
 	if (path[0] != '/')
