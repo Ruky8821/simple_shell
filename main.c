@@ -21,7 +21,7 @@ int main(int argc, char *argv[])
 			free(line);
 			exit(0);
 		}
-		input_controller(line, argv[0]);
+		input_controller(&line, argv[0]);
 		free(line);
 
 	}

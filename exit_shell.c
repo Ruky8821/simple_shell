@@ -3,8 +3,9 @@
  * exit_shell - Terminate the shell or exit a process with a status code.
  * @params: Double pointer to an array of command parameters.
  * @argv: Pointer to the executable's name
+ * Return: int
  */
-void exit_shell(char **params, char *argv)
+int exit_shell(char **params, char *argv)
 {
 	int i;
 	int status;
@@ -12,11 +13,11 @@ void exit_shell(char **params, char *argv)
 	for (i = 0; params[i] != NULL; i++)
 		;
 	if (i == 0)
-		exit(0);
+		return (0);
 	if (i > 1)
 	{
 		perror("error");
-		exit(0);
+		return (0);
 	}
 	if (i == 1)
 	{
@@ -26,11 +27,12 @@ void exit_shell(char **params, char *argv)
 			print_error("1: exit: Illegal number: ", argv);
 			write(STDERR_FILENO, params[0], str_len(params[0]));
 			write(STDERR_FILENO, "\n", 1);
-			exit(2);
+			return (2);
 		}
 		else
-			exit(status);
+			return (status);
 	}
+	return (0);
 }
 /**
  * string_to_int - Convert a string to an integer.

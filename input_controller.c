@@ -4,16 +4,17 @@
 * @input: user input string to be processed
 * @argv : An array of pointers to the command-line arguments
 */
-void input_controller(char *input, char *argv)
+void input_controller(char **input, char *argv)
 {
 	char **params, **tags;
 	int i, j;
+	int status = 0;
 
-	if (check_line_empty(input) == 1)
+	if (check_line_empty(*input) == 1)
 		return;
 	for (i = 0; input[i] ; i++)
 		;
-	params = separate_params(input);
+	params = separate_params(*input);
 	for (i = 0; params[i] != NULL; i++)
 		;
 	tags = malloc(sizeof(char *) * i);
@@ -26,17 +27,20 @@ void input_controller(char *input, char *argv)
 	}
 	for (j = 0; j < i - 1 ; j++)
 	{
-		tags[j] = malloc(strlen(params[j + 1]) + 1);
+		tags[j] = malloc(str_len(params[j + 1]) + 1);
 		str_cpy(tags[j], params[j + 1]);
 	}
 	tags[j] = NULL;
-	handle_command(params[0], tags, argv);
-	for (j = 0; j < i; j++)
-		free(params[j]);
-	free(params);
-	for (j = 0; j < i - 1; j++)
-		free(tags[j]);
-	free(tags);
+	handle_command(params[0], tags, argv, &status);
+	if (str_cmp(params[0], "exit") == 0)
+	{
+		free_double_pointer(params, i);
+		free_double_pointer(tags, i - 1);
+		free(*input);
+		exit(status);
+	}
+	free_double_pointer(params, i);
+	free_double_pointer(tags, i - 1);
 }
 /**
  * separate_params - function that retrieves all the params from the input
@@ -90,15 +94,18 @@ char **separate_params(char *input)
  * handle_command - function that processes the command based on the given path
  * @path: The path containing the command to be processed.
  * @params: the params excluding the command
- * * @argv : An array of pointers to the command-line arguments
+ * @argv : An array of pointers to the command-line arguments
+ * @status : status of the code
 */
-void handle_command(char *path, char **params, char *argv)
+void handle_command(char *path, char **params, char *argv, int *status)
 {
-	char *get_command, *command, *full_path;
-	char *temp_path = NULL;
+	char *get_command, *command, *full_path, *temp_path;
 
 	if (str_cmp(path, "exit") == 0)
-		exit_shell(params, argv);
+	{
+		*status = exit_shell(params, argv);
+		return;
+	}
 	if (str_cmp(path, "cd") == 0)
 	{
 		change_dir(params, argv);
@@ -113,7 +120,7 @@ void handle_command(char *path, char **params, char *argv)
 			write(STDERR_FILENO, path, str_len(path));
 			write(STDERR_FILENO, ": not found\n", 12);
 			free(full_path);
-			exit(127);
+			*status = 127;
 		}
 			command_type(path, full_path, params);
 		free(full_path);
@@ -132,4 +139,18 @@ void handle_command(char *path, char **params, char *argv)
 		command_type(command, temp_path, params);
 	}
 	free(temp_path);
+}
+/**
+ * free_double_pointer - Frees memory allocated for
+ *				a double pointer and its content.
+ * @ptr: The double pointer to be freed.
+ * @length: The length of the array of pointers.
+ */
+void free_double_pointer(char **ptr, int length)
+{
+	int j;
+
+	for (j = 0; j < length; j++)
+		free(ptr[j]);
+	free(ptr);
 }
