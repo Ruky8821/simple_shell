@@ -8,7 +8,7 @@ void input_controller(char **input, char *argv)
 {
 	char **params, **tags;
 	int i, j;
-	int status = 0;
+	int status;
 
 	if (check_line_empty(*input) == 1)
 		return;
@@ -31,8 +31,8 @@ void input_controller(char **input, char *argv)
 		str_cpy(tags[j], params[j + 1]);
 	}
 	tags[j] = NULL;
-	handle_command(params[0], tags, argv, &status);
-	if (str_cmp(params[0], "exit") == 0)
+	status = handle_command(params[0], tags, argv);
+	if (str_cmp(params[0], "exit") == 0 || status != 0)
 	{
 		free_double_pointer(params, i);
 		free_double_pointer(tags, i - 1);
@@ -80,36 +80,32 @@ char **separate_params(char *input)
  * @path: The path containing the command to be processed.
  * @params: the params excluding the command
  * @argv : An array of pointers to the command-line arguments
- * @status : status of the code
+ * Return: 0 (success) or other value depending on the error type
 */
-void handle_command(char *path, char **params, char *argv, int *status)
+int handle_command(char *path, char **params, char *argv)
 {
 	char *get_command, *command, *full_path, *temp_path;
+	int status;
 
 	if (str_cmp(path, "exit") == 0)
-	{
-		*status = exit_shell(params, argv);
-		return;
-	}
+		return (exit_shell(params, argv));
 	if (str_cmp(path, "cd") == 0)
 	{
 		change_dir(params, argv);
-		return;
+		return (0);
 	}
 	if (path[0] != '/')
 	{
 		full_path =  get_path(path);
 		if (full_path == NULL)
 		{
-			print_error("1: ", argv);
-			write(STDERR_FILENO, path, str_len(path));
-			write(STDERR_FILENO, ": not found\n", 12);
+			not_found(argv, path);
 			free(full_path);
-			*status = 127;
+			return (127);
 		}
-			command_type(path, full_path, params);
+		status = command_type(path, full_path, params, argv);
 		free(full_path);
-		return;
+		return (status);
 	}
 	temp_path = (char *)malloc(str_len(path) + 1);
 	str_cpy(temp_path, path);
@@ -121,9 +117,12 @@ void handle_command(char *path, char **params, char *argv, int *status)
 			command = get_command;
 			get_command = strtok(NULL, "/");
 		}
-		command_type(command, temp_path, params);
+		status = command_type(command, temp_path, params, argv);
+		free(temp_path);
+		return (status);
 	}
 	free(temp_path);
+	return (0);
 }
 /**
  * free_double_pointer - Frees memory allocated for

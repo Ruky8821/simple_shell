@@ -77,5 +77,7 @@ char *token_dirs(char *penv_cp, char *argv, char *penv)
 	}
 	free(penv);
 	free(penv_cp);
+	free(exe_path);
 	return (NULL);
 }
+

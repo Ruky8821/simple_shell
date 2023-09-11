@@ -25,7 +25,7 @@ void copy_non_space_strings(char **argv, char **params, char *token)
 		if (!contains_only_spaces)
 		{
 			k = 0;
-			argv[argv_index] = malloc(str_len(params[i]) + 1);
+			argv[argv_index] = malloc(sizeof(char) * (str_len(params[i]) + 1));
 			for (j = 0; params[i][j]; j++)
 			{
 				if (params[i][j] != ' ' && params[i][j] != '\t')

@@ -22,3 +22,14 @@ void not_existing_dir(char *argv, char *dir)
 	write(STDERR_FILENO, dir, str_len(dir));
 	write(STDERR_FILENO, "\n", 1);
 }
+/**
+ * not_found- Prints an error message when an executable is not found
+ * @argv: The name of the command that triggered the error.
+ * @exec: Name of the non-existing executable
+ */
+void not_found(char *argv, char *exec)
+{
+	print_error("1: ", argv);
+	write(STDERR_FILENO, exec, str_len(exec));
+	write(STDERR_FILENO, ": not found\n", 12);
+}
