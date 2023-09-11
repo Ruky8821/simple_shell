@@ -26,6 +26,8 @@ void command_type(char *token, const char *path, char **params)
 	{
 		args = malloc(sizeof(char *) * (i + 2));
 		copy_non_space_strings(args, params, token);
+		if (str_cmp(token, "echo") == 0 && args[1][0] == '#')
+			return;
 		execve(path, args, env);
 		exit(1);
 	}

@@ -23,6 +23,7 @@ void change_dir(char **params, char *argv);
 void print_error(char *message, char *argv);
 void not_existing_dir(char *argv, char *dir);
 char *get_previous_dir(void);
+int tokenize(char *one_param, int i, char **tokens);
 void command_type(char *token, const char *path, char **params);
 int exit_shell(char **params, char *argv);
 void get_absolute_path(char *rel_path, char *cwd);

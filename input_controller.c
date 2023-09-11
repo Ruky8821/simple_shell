@@ -71,22 +71,7 @@ char **separate_params(char *input)
 	}
 	one_param = strtok(input, " \t");
 	i = 0;
-	while (one_param != NULL)
-	{
-		tokens[i] = malloc(str_len(one_param) + 1);
-		if (tokens[i] == NULL)
-		{
-			for (j = 0; j < i ; j++)
-				free(tokens[j]);
-			free(tokens);
-			free(temp_input);
-			return (NULL);
-		}
-		str_cpy(tokens[i], one_param);
-		one_param = strtok(NULL, " \t");
-		i++;
-	}
-	tokens[i] = NULL;
+	tokenize(one_param, i, tokens);
 	free(temp_input);
 	return (tokens);
 }

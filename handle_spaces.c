@@ -51,6 +51,8 @@ int check_line_empty(char *input)
 	int empty_spaces = 1;
 	int i;
 
+	if (input[0] == '#')
+		return (empty_spaces);
 	for (i = 0; input[i] ; i++)
 	{
 		if (input[i] != ' ' && input[i] != '\t' && input[i] != '\n')
