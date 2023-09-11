@@ -50,7 +50,7 @@ void input_controller(char **input, char *argv)
 char **separate_params(char *input)
 {
 	char **tokens, *one_param, *token;
-	int i = 0, j;
+	int i = 0;
 	char *temp_input = malloc(sizeof(char) * (str_len(input)));
 
 	if (temp_input == NULL)
